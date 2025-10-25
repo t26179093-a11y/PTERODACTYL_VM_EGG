@@ -1,0 +1,110 @@
+{
+  "_comment": "Pterodactyl Egg for PteroVM Builder - created by assistant",
+  "meta": {
+    "version": "PTDL_v2",
+    "update_url": null
+  },
+  "name": "PteroVM Builder",
+  "author": "assistant",
+  "description": "Egg to run QEMU-based VMs inside a container. Choose OS, RAM, CPU and start mode (--web for sshx.io).",
+  "docker_images": {
+    "Debian 12 (Bookworm)": "ghcr.io/parkervcp/yolks:debian"
+  },
+  "startup": "./vm.sh {{ACTION}} {{VM_NAME}}",
+  "config": {
+    "files": "{}",
+    "startup": "{\\n    \\\"done\\\": \\\"VM erstellt\\\"\\n}",
+    "logs": "{}",
+    "stop": "exit"
+  },
+  "scripts": {
+    "installation": {
+      "script": "bash install.sh",
+      "container": "ghcr.io/parkervcp/installers:debian",
+      "entrypoint": "/bin/bash"
+    }
+  },
+  "variables": [
+    {
+      "name": "ACTION",
+      "description": "Welche Aktion? (create,start,stop,delete,list)",
+      "env_variable": "ACTION",
+      "default_value": "create",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string|max:50"
+    },
+    {
+      "name": "VM_NAME",
+      "description": "Name der VM (keine Leerzeichen)",
+      "env_variable": "VM_NAME",
+      "default_value": "ptero",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string|max:50"
+    },
+    {
+      "name": "OS_CHOICE",
+      "description": "OS: 1=Ubuntu22.04,2=Ubuntu24.04,3=Debian11,4=Debian12,5=Debian13",
+      "env_variable": "OS_CHOICE",
+      "default_value": "1",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|integer|min:1|max:5"
+    },
+    {
+      "name": "RAM",
+      "description": "RAM in MB",
+      "env_variable": "RAM",
+      "default_value": "2048",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|integer|min:256"
+    },
+    {
+      "name": "CPU",
+      "description": "CPU Kerne",
+      "env_variable": "CPU",
+      "default_value": "2",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|integer|min:1"
+    },
+    {
+      "name": "DISK",
+      "description": "Disk Gr\u00f6\u00dfe in GB",
+      "env_variable": "DISK",
+      "default_value": "20",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|integer|min:1"
+    },
+    {
+      "name": "EXTRA",
+      "description": "Extra Disk Gr\u00f6\u00dfe in GB (0=keine)",
+      "env_variable": "EXTRA",
+      "default_value": "0",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|integer|min:0"
+    },
+    {
+      "name": "PASSWD",
+      "description": "Root Passwort f\u00fcr die VM",
+      "env_variable": "PASSWD",
+      "default_value": "test123",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string"
+    },
+    {
+      "name": "START_MODE",
+      "description": "Start Mode: --web f\u00fcr sshx.io Web-Terminal oder leer",
+      "env_variable": "START_MODE",
+      "default_value": "--web",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "string|max:10"
+    }
+  ]
+}
