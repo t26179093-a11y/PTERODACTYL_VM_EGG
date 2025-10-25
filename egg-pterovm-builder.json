@@ -6,7 +6,7 @@
   },
   "exported_at": "2025-10-25T00:00:00+02:00",
   "name": "PteroVM Auto Manager",
-  "author": "chatgpt@openai",
+  "author": "realtvalexfncloud@gmail.com",
   "description": "Erstellt automatisch eine VM mit QEMU (Ubuntu/Debian) im Container",
   "features": null,
   "docker_images": {
