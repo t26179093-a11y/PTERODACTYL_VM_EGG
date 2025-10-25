@@ -13,7 +13,7 @@
     "ghcr.io/pterodactyl/yolks:debian": "ghcr.io/pterodactyl/yolks:debian"
   },
   "file_denylist": [],
-  "startup": "bash auto_start.sh",
+  "startup": "bash /home/container/auto_start.sh",
   "config": {
     "files": "{}",
     "startup": "{}",
@@ -22,7 +22,7 @@
   },
   "scripts": {
     "installation": {
-      "script": "#!/bin/bash\n# Installation von QEMU und Auto VM Script\ncd /home/container\napt update -y\nDEBIAN_FRONTEND=noninteractive apt install -y qemu-system-x86 qemu-utils cloud-image-utils wget curl\ncurl -L https://raw.githubusercontent.com/t26179093-a11y/PTERODACTYL_VM_EGG/main/auto_start.sh -o auto_start.sh\nchmod +x auto_start.sh\necho \"✅ Installation abgeschlossen. Die VM wird automatisch erstellt und gestartet.\"",
+      "script": "#!/bin/bash\ncd /home/container || exit 1\napt update -y\nDEBIAN_FRONTEND=noninteractive apt install -y qemu-system-x86 qemu-utils cloud-image-utils wget curl\ncurl -L https://raw.githubusercontent.com/t26179093-a11y/PTERODACTYL_VM_EGG/main/auto_start.sh -o /home/container/auto_start.sh\nchmod +x /home/container/auto_start.sh\necho \"✅ Installation abgeschlossen. Die VM wird automatisch erstellt und gestartet.\"",
       "container": "ghcr.io/pterodactyl/installers:debian",
       "entrypoint": "bash"
     }
