@@ -6,7 +6,7 @@
     },
     "exported_at": "2025-10-25T00:00:00+02:00",
     "name": "PteroVM Auto Manager",
-    "author": "chatgpt@openai",
+    "author": "realtvalexfncloud@gmail.com",
     "description": "Erstellt und startet automatisch eine VM mit QEMU (Ubuntu/Debian). Lädt das Script von GitHub.",
     "features": null,
     "docker_images": {
@@ -22,7 +22,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "#!/bin/bash\n# === PteroVM Auto Installer ===\ncd /mnt/server\napt update -y\nDEBIAN_FRONTEND=noninteractive apt install -y qemu-system-x86 qemu-utils cloud-image-utils curl wget\n\n# Lade VM Script von GitHub\ncurl -L https://raw.githubusercontent.com/DEIN_GITHUB_USER/DEIN_REPO/main/vm.sh -o vm.sh\nchmod +x vm.sh\n\n# Erstelle Auto-Starter Script\ncat > auto_start.sh <<'EOF'\n#!/bin/bash\ncd /mnt/server\n\nVM_NAME=\"${VM_NAME:-auto}\"\nOS_CHOICE=\"${OS_CHOICE:-1}\"\nRAM=\"${RAM:-2048}\"\nCPU=\"${CPU:-2}\"\nDISK=\"${DISK:-20}\"\nEXTRA=\"${EXTRA:-0}\"\nPASSWD=\"${PASSWD:-test123}\"\nSTART_MODE=\"${START_MODE:---web}\"\n\n# Prüfen, ob die VM schon existiert\nif [ ! -d \"/root/vms/$VM_NAME\" ]; then\n  echo \"🧠 Erstelle neue VM $VM_NAME...\"\n  bash vm.sh create <<INPUT\n$VM_NAME\n$OS_CHOICE\n$RAM\n$CPU\n$DISK\n$EXTRA\n$PASSWD\nINPUT\nfi\n\n# Starte die VM automatisch\nbash vm.sh start \"$VM_NAME\" \"$START_MODE\"\nEOF\n\nchmod +x auto_start.sh\n\necho \"✅ Installation abgeschlossen. Die VM wird beim Start automatisch erstellt und gestartet.\"\n",
+            "script": "#!/bin/bash\n# === PteroVM Auto Installer ===\ncd /mnt/server\napt update -y\nDEBIAN_FRONTEND=noninteractive apt install -y qemu-system-x86 qemu-utils cloud-image-utils curl wget\n\n# Lade VM Script von GitHub\ncurl -L https://raw.githubusercontent.com/t26179093-a11y/PTERODACTYL_VM_EGG/main/vm.sh -o vm.sh\nchmod +x vm.sh\n\n# Erstelle Auto-Starter Script\ncat > auto_start.sh <<'EOF'\n#!/bin/bash\ncd /mnt/server\n\nVM_NAME=\"${VM_NAME:-auto}\"\nOS_CHOICE=\"${OS_CHOICE:-1}\"\nRAM=\"${RAM:-2048}\"\nCPU=\"${CPU:-2}\"\nDISK=\"${DISK:-20}\"\nEXTRA=\"${EXTRA:-0}\"\nPASSWD=\"${PASSWD:-test123}\"\nSTART_MODE=\"${START_MODE:---web}\"\n\n# Prüfen, ob die VM schon existiert\nif [ ! -d \"/root/vms/$VM_NAME\" ]; then\n  echo \"🧠 Erstelle neue VM $VM_NAME...\"\n  bash vm.sh create <<INPUT\n$VM_NAME\n$OS_CHOICE\n$RAM\n$CPU\n$DISK\n$EXTRA\n$PASSWD\nINPUT\nfi\n\n# Starte die VM automatisch\nbash vm.sh start \"$VM_NAME\" \"$START_MODE\"\nEOF\n\nchmod +x auto_start.sh\n\necho \"✅ Installation abgeschlossen. Die VM wird beim Start automatisch erstellt und gestartet.\"\n",
             "container": "ghcr.io/pterodactyl/installers:debian",
             "entrypoint": "bash"
         }
@@ -102,4 +102,3 @@
         }
     ]
 }
-
